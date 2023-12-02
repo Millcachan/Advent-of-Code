@@ -6,6 +6,7 @@ from math import *
 def extract_text(filename):
     with open(filename, 'r') as file:
         text = file.read().splitlines()
+
     return text
 
 def extract_numbers(text):
@@ -32,13 +33,13 @@ def sum(tab):
             total_sum += 10 * array[0] + array[0]
         else:
             total_sum += 10 * array[0] + array[-1]
+
     return total_sum
 
 def main():
     filename = argv[1]
     text = extract_text(filename)
     tab = extract_numbers(text)
-    print(tab)
     total_sum = sum(tab)
     print("The total sum is :", total_sum)
 
