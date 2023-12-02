@@ -1,11 +1,11 @@
 #!/usr/bin/python3
 
 from sys import *
-from math import *
 
 def extract_text(filename):
     with open(filename, 'r') as file:
         text = file.read().splitlines()
+
     return text
 
 def extract_numbers(text):
@@ -24,22 +24,22 @@ def extract_numbers(text):
 
     return tab
 
-def sum(tab):
-    total_sum = 0
+def numbers_sum(tab):
+    sum = 0
 
     for array in tab:
         if len(array) == 1:
-            total_sum += 10 * array[0] + array[0]
+            sum += 10 * array[0] + array[0]
         else:
-            total_sum += 10 * array[0] + array[-1]
-    return total_sum
+            sum += 10 * array[0] + array[-1]
+
+    return sum
 
 def main():
     filename = argv[1]
     text = extract_text(filename)
     tab = extract_numbers(text)
-    print(tab)
-    total_sum = sum(tab)
-    print("The total sum is :", total_sum)
+    sum = numbers_sum(tab)
+    print("The total sum is :", sum)
 
 main()
