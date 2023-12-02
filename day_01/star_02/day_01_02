@@ -1,0 +1,45 @@
+#!/usr/bin/python3
+
+from sys import *
+from math import *
+
+def extract_text(filename):
+    with open(filename, 'r') as file:
+        text = file.read().splitlines()
+    return text
+
+def extract_numbers(text):
+    list = ['zero', 'one', 'two', 'three', 'four', 'five', 'six', 'seven', 'eight', 'nine']
+    tab = []
+
+    for line in text:
+        current_line_numbers = []
+        for i, char in enumerate(line):
+            if char.isdigit():
+                current_line_numbers.append(int(char))
+            for j, val in enumerate(list):
+                if line[i:].startswith(val):
+                    current_line_numbers.append(int(j))
+        tab.append(current_line_numbers)
+
+    return tab
+
+def sum(tab):
+    total_sum = 0
+
+    for array in tab:
+        if len(array) == 1:
+            total_sum += 10 * array[0] + array[0]
+        else:
+            total_sum += 10 * array[0] + array[-1]
+    return total_sum
+
+def main():
+    filename = argv[1]
+    text = extract_text(filename)
+    tab = extract_numbers(text)
+    print(tab)
+    total_sum = sum(tab)
+    print("The total sum is :", total_sum)
+
+main()
