@@ -1,0 +1,69 @@
+#!/usr/bin/python3
+
+from sys import *
+from re import *
+
+def extract_text(filename):
+    with open(filename, 'r') as file:
+        text = file.read().splitlines()
+
+    return text
+
+def get_power_reveal(reveals, max_red, max_green, max_blue):
+    color = reveals.split(', ')
+    tab = [max_red, max_green, max_blue]
+
+    for reveal in color:
+        if "red" in reveal:
+            if (int(reveal.split()[0]) > max_red):
+                tab[0] = int(reveal.split()[0])
+
+        if "green" in reveal:
+            if (int(reveal.split()[0]) > max_green):
+                tab[1] = int(reveal.split()[0])
+
+        if "blue" in reveal:
+            if (int(reveal.split()[0]) > max_blue):
+                tab[2] = int(reveal.split()[0])
+
+    return tab
+
+def get_power_game(game):
+    max_red, max_green, max_blue = 0, 0, 0
+    reveals = game.split('; ')
+    tab = []
+
+    for i, reveal in enumerate(reveals):
+        tab.append(get_power_reveal(reveal, max_red, max_green, max_blue))
+        max_red = max(max_red, tab[i][0])
+        max_green = max(max_green, tab[i][1])
+        max_blue = max(max_blue, tab[i][2])
+
+    return max_red * max_green * max_blue
+
+def get_power_games(text):
+    tab = []
+
+    for i, line in enumerate(text):
+        for j, letters in enumerate(line):
+            if (letters == ':'):
+                    tab.append(get_power_game(line[j + 1:]))
+
+    return tab
+
+def power_sum(tab):
+    sum = 0
+
+    for id in tab:
+        sum += id
+
+    return sum
+
+def main():
+    filename = argv[1]
+    text = extract_text(filename)
+    tab = get_power_games(text)
+    sum = power_sum(tab)
+    print("The sum of the power of the games is :", sum)
+
+main()

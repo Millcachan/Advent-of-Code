@@ -1,0 +1,77 @@
+#!/usr/bin/python3
+
+from sys import *
+from re import *
+
+def extract_text(filename):
+    with open(filename, 'r') as file:
+        text = file.read().splitlines()
+
+    return text
+
+def valid_blocs(blocs):
+    max_red = 12
+    max_green = 13
+    max_blue = 14
+    nb_blocs = int(blocs.split()[0])
+
+    if "red" in blocs:
+        if (nb_blocs > max_red):
+            return False
+
+    if "green" in blocs:
+        if (nb_blocs > max_green):
+            return False
+
+    if "blue" in blocs:
+        if (nb_blocs > max_blue):
+            return False
+
+    return True
+
+def valid_reveal(reveal):
+    color = reveal.split(', ')
+
+    for blocs in color:
+        if valid_blocs(blocs) == False:
+            return False
+
+    return True
+
+def valid_game(game):
+    reveals = game.split('; ')
+
+    for reveal in reveals:
+        if valid_reveal(reveal) == False:
+            return False
+
+    return True
+
+def get_valid_id_games(text):
+    tab = []
+
+    for i, line in enumerate(text):
+        for j, letters in enumerate(line):
+            if (letters == ':'):
+                if valid_game(line[j + 1:]):
+                    tab.append(i + 1)
+
+    return tab
+
+def id_sum(tab):
+    sum = 0
+
+    for id in tab:
+        sum += id
+
+    return sum
+
+def main():
+    filename = argv[1]
+    text = extract_text(filename)
+    tab = get_valid_id_games(text)
+    sum = id_sum(tab)
+
+    print("The sum of valid games id is :", sum)
+
+main()
