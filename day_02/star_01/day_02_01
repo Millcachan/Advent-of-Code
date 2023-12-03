@@ -66,11 +66,20 @@ def id_sum(tab):
     return sum
 
 def main():
-    filename = argv[1]
-    text = extract_text(filename)
-    tab = get_valid_id_games(text)
-    sum = id_sum(tab)
+    try:
+        try:
+            filename = argv[1]
 
-    print("The sum of valid games id is :", sum)
+        except:
+            print("Wrong file or permission denied")
+
+        text = extract_text(filename)
+        tab = get_valid_id_games(text)
+        sum = id_sum(tab)
+
+        print("The sum of valid games id is :", sum)
+
+    except:
+        print("\nWrong uttilisation of the program:\nTry: ./day_02_01 'txt filepath'\n")
 
 main()

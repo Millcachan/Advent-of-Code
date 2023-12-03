@@ -55,10 +55,18 @@ def sum_numbers(tab):
     return sum
 
 def main():
-    filename = argv[1]
+    if (len(argv) != 2):
+        print("\nWrong uttilisation of the program:\nTry: ./day_01_01 'txt filepath'\n")
+
+    try:
+        filename = argv[1]
+    except:
+        print("Wrong file or permission denied")
+
     text = extract_text(filename)
     tab = get_part_number(text)
     sum = sum_numbers(tab)
+
     print("The sum of all part number is :", sum)
 
 main()

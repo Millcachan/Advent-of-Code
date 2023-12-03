@@ -59,10 +59,18 @@ def power_sum(tab):
     return sum
 
 def main():
-    filename = argv[1]
+    if (len(argv) != 2):
+        print("\nWrong uttilisation of the program:\nTry: ./day_01_01 'txt filepath'\n")
+
+    try:
+        filename = argv[1]
+    except:
+        print("Wrong file or permission denied")
+
     text = extract_text(filename)
     tab = get_power_games(text)
     sum = power_sum(tab)
+
     print("The sum of the power of the games is :", sum)
 
 main()
