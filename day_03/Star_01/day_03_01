@@ -8,8 +8,57 @@ def extract_text(filename):
 
     return text
 
+def is_symbol(text, i, j, height, width):
+    if not (0 <= i < height and 0 <= j < width):
+        return False
+
+    return text[i][j] != "." and not text[i][j].isdigit()
+
+def get_part_number(text):
+    height = len(text)
+    width = len(text[0])
+    tab = []
+
+    for i, line in enumerate(text):
+        start, j = 0, 0
+        while j < width:
+            start = j
+            num = ""
+
+            while j < width and line[j].isdigit():
+                num += line[j]
+                j += 1
+
+            if num == "":
+                j += 1
+                continue
+
+            num = int(num)
+
+            if is_symbol(text, i, start-1, height, width) or is_symbol(text, i, j, height, width):
+                tab.append(num)
+                continue
+
+            for k in range(start-1, j+1):
+                if is_symbol(text, i-1, k, height, width) or is_symbol(text, i+1, k, height, width):
+                    tab.append(num)
+                    break
+
+    return tab
+
+def sum_numbers(tab):
+    sum = 0
+
+    for number in tab:
+        sum += number
+
+    return sum
+
 def main():
     filename = argv[1]
     text = extract_text(filename)
+    tab = get_part_number(text)
+    sum = sum_numbers(tab)
+    print("The sum of all part number is :", sum)
 
 main()
