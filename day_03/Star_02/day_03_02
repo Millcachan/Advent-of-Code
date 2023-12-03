@@ -1,0 +1,15 @@
+#!/usr/bin/python3
+
+from sys import *
+
+def extract_text(filename):
+    with open(filename, 'r') as file:
+        text = file.read().splitlines()
+
+    return text
+
+def main():
+    filename = argv[1]
+    text = extract_text(filename)
+
+main()
