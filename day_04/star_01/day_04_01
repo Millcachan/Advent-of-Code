@@ -1,0 +1,45 @@
+#!/usr/bin/python3
+
+from sys import *
+
+def extract_text(filename):
+    with open(filename, 'r') as file:
+        text = file.read().splitlines()
+
+    return text
+
+def extract_win_numbers(text):
+    tab = []
+
+    for i, line in enumerate(text):
+        line = line.split(": ")[1]
+        wins, nums = map(str.split, line.split(" | "))
+        tab.append(sum(nums.count(w) for w in wins))
+
+    return tab
+
+def sum_winning_numbers(tab):
+    sum = 0
+
+    for i, winning_number in enumerate(tab):
+        if tab[i] > 0:
+            sum += 2 ** (winning_number - 1)
+
+    return sum
+
+def main():
+    if (len(argv) != 2):
+        print("\nWrong uttilisation of the program:\nTry: ./day_01_01 'txt filepath'\n")
+
+    try:
+        filename = argv[1]
+    except:
+        print("Wrong file or permission denied")
+
+    text = extract_text(filename)
+    tab = extract_win_numbers(text)
+    sum = sum_winning_numbers(tab)
+
+    print("The sum of all winning numbers is :", sum)
+
+main()
