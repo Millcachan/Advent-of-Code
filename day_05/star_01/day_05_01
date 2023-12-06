@@ -1,0 +1,59 @@
+#!/usr/bin/python3
+
+from sys import *
+
+def extract_text(filename):
+    with open(filename, 'r') as file:
+        text = file.read()
+
+    return text
+
+def extract_seeds_numbers(text):
+    seeds, *_ = text.split("\n\n")
+    seeds = seeds.split(": ")[1]
+    seeds = [int(x) for x in seeds.split()]
+
+    return seeds
+
+def search_for_seeds(seed, range):
+    for a, b in range:
+            if seed in b:
+                return a.start + seed - b.start
+
+    return seed
+
+def extract_map(text):
+    map = []
+    _, *text = text.split("\n\n")
+
+    for lines in text:
+        _, *ranges = lines.splitlines()
+        ranges = [[int(x) for x in numbers.split()] for numbers in ranges]
+        ranges = [(range(a, a + c), range(b, b + c)) for a, b, c in ranges]
+        map.append(ranges)
+
+    return map
+
+def min_seeds(seeds, map):
+    for ranges in map:
+        seeds = [search_for_seeds(x, ranges) for x in seeds]
+
+    return min(seeds)
+
+def main():
+    if (len(argv) != 2):
+        print("\nWrong uttilisation of the program:\nTry: ./day_01_01 'txt filepath'\n")
+
+    try:
+        filename = argv[1]
+    except:
+        print("Wrong file or permission denied")
+
+    text = extract_text(filename)
+    seeds = extract_seeds_numbers(text)
+    map = extract_map(text)
+    min = min_seeds(seeds, map)
+
+    print("The lowest location number that corresponds to any of the initial seed numbers is :", min)
+
+main()

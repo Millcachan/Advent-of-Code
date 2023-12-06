@@ -1,0 +1,19 @@
+#!/usr/bin/python3
+
+from sys import *
+def extract_text(filename):
+    with open(filename, 'r') as file:
+        text = file.read()
+
+    return text
+
+def main():
+    if (len(argv) != 2):
+        print("\nWrong uttilisation of the program:\nTry: ./day_01_01 'txt filepath'\n")
+
+    try:
+        filename = argv[1]
+    except:
+        print("Wrong file or permission denied")
+
+main()
