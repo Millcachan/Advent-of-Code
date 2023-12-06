@@ -1,0 +1,48 @@
+#!/usr/bin/python3
+
+from sys import *
+
+def extract_text(filename):
+    with open(filename, 'r') as file:
+        text = file.read().strip()
+
+    return text
+
+def is_valid_races(time, dist):
+    sum = 0
+
+    for x in range(time + 1):
+        distx = x * (time - x)
+
+        if distx >= dist:
+            sum += 1
+
+    return sum
+
+def product_numbers_of_ways(text):
+    line1, line2 = text.split('\n')
+
+    times = [int(x) for x in line1.split(':')[1].split()]
+    dist = [int(x) for x in line2.split(':')[1].split()]
+
+    product = 1
+
+    for i in range(len(times)):
+        product *= is_valid_races(times[i], dist[i])
+
+    return product
+
+def main():
+    if (len(argv) != 2):
+        print("\nWrong uttilisation of the program:\nTry: ./day_01_01 'txt filepath'\n")
+
+    try:
+        text = extract_text(argv[1])
+    except:
+        print("Wrong file or permission denied")
+
+    result = product_numbers_of_ways(text)
+
+    print("The product of numbers of ways is:", result)
+
+main()
