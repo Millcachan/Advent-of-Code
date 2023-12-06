@@ -42,7 +42,7 @@ def min_seeds(seeds, map):
 
 def main():
     if (len(argv) != 2):
-        print("\nWrong uttilisation of the program:\nTry: ./day_01_01 'txt filepath'\n")
+        print("\nWrong uttilisation of the program:\nTry: ./day_05_01 'txt filepath'\n")
 
     try:
         filename = argv[1]
